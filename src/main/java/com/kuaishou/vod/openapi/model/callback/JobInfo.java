@@ -43,6 +43,10 @@ public class JobInfo {
     @Expose
     public List<MediaInfo> mediaInfos;
 
+    @SerializedName("MediaFeature")
+    @Expose
+    public MediaFeature mediaFeature;
+
     /**
      * 任务ID
      */
@@ -121,4 +125,11 @@ public class JobInfo {
         this.errorMessage = errorMessage;
     }
 
+    public MediaFeature getMediaFeature() {
+        return mediaFeature;
+    }
+
+    public void setMediaFeature(MediaFeature mediaFeature) {
+        this.mediaFeature = mediaFeature;
+    }
 }
