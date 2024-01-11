@@ -5,11 +5,13 @@ import static com.kuaishou.vod.core.AbstractResponse.commitUploadResponse;
 import static com.kuaishou.vod.core.AbstractResponse.deleteMediaResponse;
 import static com.kuaishou.vod.core.AbstractResponse.describeFetchJobsResponse;
 import static com.kuaishou.vod.core.AbstractResponse.describeMediaInfoResponse;
+import static com.kuaishou.vod.core.AbstractResponse.describeMediaProcessJobResponse;
 import static com.kuaishou.vod.core.AbstractResponse.detectMediaResponse;
 import static com.kuaishou.vod.core.AbstractResponse.enhanceMediaResponse;
 import static com.kuaishou.vod.core.AbstractResponse.fetchStoreResponse;
 import static com.kuaishou.vod.core.AbstractResponse.fetchUploadResponse;
 import static com.kuaishou.vod.core.AbstractResponse.listDanmakuPreAuditResponse;
+import static com.kuaishou.vod.core.AbstractResponse.listMediaProcessJobResponse;
 import static com.kuaishou.vod.core.AbstractResponse.processMediaResponse;
 import static com.kuaishou.vod.core.AbstractResponse.processingFlowResponse;
 import static com.kuaishou.vod.core.AbstractResponse.submitMediaProcessJobsResponse;
@@ -27,11 +29,13 @@ import com.kuaishou.vod.openapi.model.request.vod.CommitUploadRequest;
 import com.kuaishou.vod.openapi.model.request.vod.DeleteMediaRequest;
 import com.kuaishou.vod.openapi.model.request.vod.DescribeFetchJobsRequest;
 import com.kuaishou.vod.openapi.model.request.vod.DescribeMediaInfoRequest;
+import com.kuaishou.vod.openapi.model.request.vod.DescribeMediaProcessJobRequest;
 import com.kuaishou.vod.openapi.model.request.vod.DetectMediaRequest;
 import com.kuaishou.vod.openapi.model.request.vod.EnhanceMediaRequest;
 import com.kuaishou.vod.openapi.model.request.vod.FetchStoreRequest;
 import com.kuaishou.vod.openapi.model.request.vod.FetchUploadRequest;
 import com.kuaishou.vod.openapi.model.request.vod.ListDanmakuPreAuditRequest;
+import com.kuaishou.vod.openapi.model.request.vod.ListMediaProcessJobRequest;
 import com.kuaishou.vod.openapi.model.request.vod.ProcessMediaRequest;
 import com.kuaishou.vod.openapi.model.request.vod.ProcessingFlowRequest;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitMediaProcessJobsRequest;
@@ -41,11 +45,13 @@ import com.kuaishou.vod.openapi.model.response.vod.CommitUploadResponse;
 import com.kuaishou.vod.openapi.model.response.vod.DeleteMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.DescribeFetchJobsResponse;
 import com.kuaishou.vod.openapi.model.response.vod.DescribeMediaInfoResponse;
+import com.kuaishou.vod.openapi.model.response.vod.DescribeMediaProcessJobResponse;
 import com.kuaishou.vod.openapi.model.response.vod.DetectMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.EnhanceMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.FetchStoreResponse;
 import com.kuaishou.vod.openapi.model.response.vod.FetchUploadResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ListDanmakuPreAuditResponse;
+import com.kuaishou.vod.openapi.model.response.vod.ListMediaProcessJobResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ProcessMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ProcessingFlowResponse;
 import com.kuaishou.vod.openapi.model.response.vod.SubmitMediaProcessJobsResponse;
@@ -137,4 +143,18 @@ public class VodClient extends AbstractClient {
         String resp = this.callByJson(request, "UpdateDanamkuAuditResult", "POST");
         return (UpdateDanamkuAuditResultResponse) updateDanamkuAuditResultResponse().fromJson(resp);
     }
+
+    public DescribeMediaProcessJobResponse describeMediaProcessJob(DescribeMediaProcessJobRequest request)
+        throws IOException, KuaishouVodSdkException {
+        String resp = this.callByJson(request, "DescribeMediaProcessJob", "POST");
+        return (DescribeMediaProcessJobResponse) describeMediaProcessJobResponse().fromJson(resp);
+    }
+
+    public ListMediaProcessJobResponse listMediaProcessJob(ListMediaProcessJobRequest request)
+        throws IOException, KuaishouVodSdkException {
+        String resp = this.callByJson(request, "ListMediaProcessJob", "POST");
+        return (ListMediaProcessJobResponse) listMediaProcessJobResponse().fromJson(resp);
+    }
+
+
 }

@@ -15,11 +15,13 @@ import com.kuaishou.vod.openapi.model.response.vod.CommitUploadResponse;
 import com.kuaishou.vod.openapi.model.response.vod.DeleteMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.DescribeFetchJobsResponse;
 import com.kuaishou.vod.openapi.model.response.vod.DescribeMediaInfoResponse;
+import com.kuaishou.vod.openapi.model.response.vod.DescribeMediaProcessJobResponse;
 import com.kuaishou.vod.openapi.model.response.vod.DetectMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.EnhanceMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.FetchStoreResponse;
 import com.kuaishou.vod.openapi.model.response.vod.FetchUploadResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ListDanmakuPreAuditResponse;
+import com.kuaishou.vod.openapi.model.response.vod.ListMediaProcessJobResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ProcessMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ProcessingFlowResponse;
 import com.kuaishou.vod.openapi.model.response.vod.SubmitMediaProcessJobsResponse;
@@ -126,6 +128,14 @@ public abstract class AbstractResponse<T extends AbstractResponse> {
 
     public static UpdateDanamkuAuditResultResponse updateDanamkuAuditResultResponse() {
         return new UpdateDanamkuAuditResultResponse(UpdateDanamkuAuditResultResponse.class);
+    }
+
+    public static DescribeMediaProcessJobResponse describeMediaProcessJobResponse() {
+        return new DescribeMediaProcessJobResponse(DescribeMediaProcessJobResponse.class);
+    }
+
+    public static ListMediaProcessJobResponse listMediaProcessJobResponse() {
+        return new ListMediaProcessJobResponse(ListMediaProcessJobResponse.class);
     }
 
     public T fromJson(String json) {
