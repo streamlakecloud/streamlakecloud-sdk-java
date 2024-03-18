@@ -15,6 +15,9 @@ public class ProcessMediaRequest extends AbstractRequest {
     @SerializedName("TranscodeSets")
     @Expose
     public List<TranscodeSet> transcodeSets;
+    @SerializedName("SpaceName")
+    @Expose
+    public String spaceName;
 
     public String getMediaId() {
         return mediaId;
@@ -32,11 +35,20 @@ public class ProcessMediaRequest extends AbstractRequest {
         this.transcodeSets = transcodeSets;
     }
 
+    public String getSpaceName() {
+        return spaceName;
+    }
+
+    public void setSpaceName(String spaceName) {
+        this.spaceName = spaceName;
+    }
+
     @Override
     public HashMap<String, String> toMap() {
         HashMap<String, String> map = new HashMap<>();
         map.computeIfAbsent("MediaId", key -> this.mediaId);
         map.computeIfAbsent("TranscodeSets", key -> new Gson().toJson(this.transcodeSets));
+        map.computeIfAbsent("SpaceName", key -> this.spaceName);
         return map;
     }
 }

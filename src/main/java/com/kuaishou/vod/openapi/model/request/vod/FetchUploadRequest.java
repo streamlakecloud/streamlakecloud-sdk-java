@@ -12,6 +12,9 @@ public class FetchUploadRequest extends AbstractRequest {
     @SerializedName("URLSets")
     @Expose
     public List<URLSet> urlSets;
+    @SerializedName("SpaceName")
+    @Expose
+    public String spaceName;
 
     public List<URLSet> getUrlSets() {
         return urlSets;
@@ -21,10 +24,19 @@ public class FetchUploadRequest extends AbstractRequest {
         this.urlSets = urlSets;
     }
 
+    public String getSpaceName() {
+        return spaceName;
+    }
+
+    public void setSpaceName(String spaceName) {
+        this.spaceName = spaceName;
+    }
+
     @Override
     public HashMap<String, String> toMap() {
         HashMap<String, String> map = new HashMap<>();
         map.computeIfAbsent("URLSets", key -> new Gson().toJson(this.urlSets));
+        map.computeIfAbsent("SpaceName", key -> this.spaceName);
         return map;
     }
 }

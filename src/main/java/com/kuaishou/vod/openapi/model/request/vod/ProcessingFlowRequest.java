@@ -2,6 +2,7 @@ package com.kuaishou.vod.openapi.model.request.vod;
 
 import java.util.HashMap;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.kuaishou.vod.core.AbstractRequest;
@@ -22,6 +23,9 @@ public class ProcessingFlowRequest extends AbstractRequest {
     @SerializedName("CallbackArgs")
     @Expose
     public String callbackArgs;
+    @SerializedName("SpaceName")
+    @Expose
+    public String spaceName;
 
     public String getMediaId() {
         return mediaId;
@@ -63,6 +67,14 @@ public class ProcessingFlowRequest extends AbstractRequest {
         this.callbackArgs = callbackArgs;
     }
 
+    public String getSpaceName() {
+        return spaceName;
+    }
+
+    public void setSpaceName(String spaceName) {
+        this.spaceName = spaceName;
+    }
+
     @Override
     public HashMap<String, String> toMap() {
         HashMap<String, String> map = new HashMap<>();
@@ -71,6 +83,7 @@ public class ProcessingFlowRequest extends AbstractRequest {
         map.computeIfAbsent("WorkflowId", key -> this.workflowId);
         map.computeIfAbsent("OverrideParams", key -> this.overrideParams);
         map.computeIfAbsent("CallbackArgs", key -> this.callbackArgs);
+        map.computeIfAbsent("SpaceName", key -> this.spaceName);
         return map;
     }
 }
