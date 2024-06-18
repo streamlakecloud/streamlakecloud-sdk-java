@@ -1,5 +1,7 @@
 package com.kuaishou.vod.openapi.model.callback;
 
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,6 +25,27 @@ public class QualityFeature {
     @SerializedName("DirtylensProbability")
     @Expose
     private Double dirtylensProbability;
+    @SerializedName("BlurProbabilityNew")
+    @Expose
+    private Double blurProbabilityNew;
+    @SerializedName("BlockyProbabilityNew")
+    @Expose
+    private Double blockyProbabilityNew;
+    @SerializedName("LowLightPercentage")
+    @Expose
+    private Double lowLightPercentage;
+    @SerializedName("CorruptionProbability")
+    @Expose
+    private Double corruptionProbability;
+    @SerializedName("NoiseProbabilityNew")
+    @Expose
+    private Double noiseProbabilityNew;
+    @SerializedName("InterlaceScaleClass")
+    @Expose
+    private Double interlaceScaleClass;
+    @SerializedName("NrQualityScoreNN")
+    @Expose
+    private List<Double> nrQualityScoreNN;
 
     public Double getNrQualityAvgScore() {
         return nrQualityAvgScore;
@@ -70,5 +93,61 @@ public class QualityFeature {
 
     public void setDirtylensProbability(Double dirtylensProbability) {
         this.dirtylensProbability = dirtylensProbability;
+    }
+
+    public Double getBlurProbabilityNew() {
+        return blurProbabilityNew;
+    }
+
+    public void setBlurProbabilityNew(Double blurProbabilityNew) {
+        this.blurProbabilityNew = blurProbabilityNew;
+    }
+
+    public Double getBlockyProbabilityNew() {
+        return blockyProbabilityNew;
+    }
+
+    public void setBlockyProbabilityNew(Double blockyProbabilityNew) {
+        this.blockyProbabilityNew = blockyProbabilityNew;
+    }
+
+    public Double getLowLightPercentage() {
+        return lowLightPercentage;
+    }
+
+    public void setLowLightPercentage(Double lowLightPercentage) {
+        this.lowLightPercentage = lowLightPercentage;
+    }
+
+    public Double getCorruptionProbability() {
+        return corruptionProbability;
+    }
+
+    public void setCorruptionProbability(Double corruptionProbability) {
+        this.corruptionProbability = corruptionProbability;
+    }
+
+    public Double getNoiseProbabilityNew() {
+        return noiseProbabilityNew;
+    }
+
+    public void setNoiseProbabilityNew(Double noiseProbabilityNew) {
+        this.noiseProbabilityNew = noiseProbabilityNew;
+    }
+
+    public Double getInterlaceScaleClass() {
+        return interlaceScaleClass;
+    }
+
+    public void setInterlaceScaleClass(Double interlaceScaleClass) {
+        this.interlaceScaleClass = interlaceScaleClass;
+    }
+
+    public List<Double> getNrQualityScoreNN() {
+        return nrQualityScoreNN;
+    }
+
+    public void setNrQualityScoreNN(List<Double> nrQualityScoreNN) {
+        this.nrQualityScoreNN = nrQualityScoreNN;
     }
 }

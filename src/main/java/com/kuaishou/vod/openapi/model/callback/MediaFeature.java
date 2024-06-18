@@ -16,6 +16,15 @@ public class MediaFeature {
     @SerializedName("AudioFeature")
     @Expose
     private AudioFeature audioFeature;
+    @SerializedName("CodingFeature")
+    @Expose
+    private CodingFeature codingFeature;
+    @SerializedName("SceneFeature")
+    @Expose
+    private SceneFeature sceneFeature;
+    @SerializedName("Version")
+    @Expose
+    private String version;
 
     public QualityFeature getQualityFeature() {
         return qualityFeature;
@@ -47,5 +56,29 @@ public class MediaFeature {
 
     public void setAudioFeature(AudioFeature audioFeature) {
         this.audioFeature = audioFeature;
+    }
+
+    public CodingFeature getCodingFeature() {
+        return codingFeature;
+    }
+
+    public void setCodingFeature(CodingFeature codingFeature) {
+        this.codingFeature = codingFeature;
+    }
+
+    public SceneFeature getSceneFeature() {
+        return sceneFeature;
+    }
+
+    public void setSceneFeature(SceneFeature sceneFeature) {
+        this.sceneFeature = sceneFeature;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }
