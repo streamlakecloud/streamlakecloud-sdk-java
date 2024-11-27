@@ -46,6 +46,9 @@ public class QualityFeature {
     @SerializedName("NrQualityScoreNN")
     @Expose
     private List<Double> nrQualityScoreNN;
+    @SerializedName("Sharpness")
+    @Expose
+    private List<Double> sharpness;
 
     public Double getNrQualityAvgScore() {
         return nrQualityAvgScore;
@@ -149,5 +152,12 @@ public class QualityFeature {
 
     public void setNrQualityScoreNN(List<Double> nrQualityScoreNN) {
         this.nrQualityScoreNN = nrQualityScoreNN;
+    }
+
+    public List<Double> getSharpness() {
+        return sharpness;
+    }
+    public void setSharpness(List<Double> sharpness) {
+        this.sharpness = sharpness;
     }
 }
