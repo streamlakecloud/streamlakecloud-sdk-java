@@ -382,3 +382,6 @@ unlinked.ds
 unlinked_spec.ds
 
 ########################## Custom ##########################
+DEPLOY.md
+deploy.sh
+pom.xml.versionsBackup
