@@ -88,6 +88,45 @@ public abstract class AbstractClient {
         return call(request, action, method, CONTENT_TYPE_JSON, headerInfo);
     }
 
+    /**
+     * 调用 API，支持额外的 URL 查询参数
+     * @param request 请求对象
+     * @param action API 操作名称
+     * @param method HTTP 方法
+     * @param extraQueryParams 额外的 URL 查询参数
+     * @return API 响应字符串
+     */
+    public String callByJsonWithQuery(AbstractRequest request, String action, String method, Map<String, String> extraQueryParams)
+            throws KuaishouVodSdkException, IOException {
+        CloseableHttpResponse resp;
+        String url = getServiceUrl(action);
+        
+        // 添加额外的查询参数
+        if (extraQueryParams != null && !extraQueryParams.isEmpty()) {
+            String extraQuery = formatGetRequestData(extraQueryParams);
+            url = url + "&" + extraQuery;
+        }
+        
+        String contentType = CONTENT_TYPE_JSON;
+        if (method.equals("POST")) {
+            HttpPost httpPost = new HttpPost(url);
+            String payload = new Gson().toJson(request);
+            httpPost.setEntity(new StringEntity(payload, ContentType.APPLICATION_JSON));
+            
+            // 构建查询字符串用于签名
+            String queryString = "Action=" + action;
+            if (extraQueryParams != null && !extraQueryParams.isEmpty()) {
+                queryString = queryString + "&" + formatGetRequestData(extraQueryParams);
+            }
+            
+            sign(httpPost, action, method, contentType, payload, queryString);
+            resp = httpClient.postRequest(httpPost);
+        } else {
+            throw new KuaishouVodSdkException(CommonError.INVALID_HTTP_METHOD.code, "Only POST method is supported for callByJsonWithQuery");
+        }
+        return EntityUtils.toString(resp.getEntity(), "UTF-8");
+    }
+
     public String call(AbstractRequest request, String action, String method, String contentType, Map<String, String> headerInfo)
         throws KuaishouVodSdkException, IOException {
         CloseableHttpResponse resp;

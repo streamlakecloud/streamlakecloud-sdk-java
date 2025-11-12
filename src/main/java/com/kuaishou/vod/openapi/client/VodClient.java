@@ -15,6 +15,7 @@ import static com.kuaishou.vod.core.AbstractResponse.listMediaProcessJobResponse
 import static com.kuaishou.vod.core.AbstractResponse.processMediaResponse;
 import static com.kuaishou.vod.core.AbstractResponse.processingFlowResponse;
 import static com.kuaishou.vod.core.AbstractResponse.submitMediaProcessJobsResponse;
+import static com.kuaishou.vod.core.AbstractResponse.submitOmniFusionTaskResponse;
 import static com.kuaishou.vod.core.AbstractResponse.updateDanamkuAuditResultResponse;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ import com.kuaishou.vod.openapi.model.request.vod.ListMediaProcessJobRequest;
 import com.kuaishou.vod.openapi.model.request.vod.ProcessMediaRequest;
 import com.kuaishou.vod.openapi.model.request.vod.ProcessingFlowRequest;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitMediaProcessJobsRequest;
+import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest;
 import com.kuaishou.vod.openapi.model.request.vod.UpdateDanamkuAuditResultRequest;
 import com.kuaishou.vod.openapi.model.response.vod.ApplyUploadInfoResponse;
 import com.kuaishou.vod.openapi.model.response.vod.CommitUploadResponse;
@@ -55,6 +57,7 @@ import com.kuaishou.vod.openapi.model.response.vod.ListMediaProcessJobResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ProcessMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ProcessingFlowResponse;
 import com.kuaishou.vod.openapi.model.response.vod.SubmitMediaProcessJobsResponse;
+import com.kuaishou.vod.openapi.model.response.vod.SubmitOmniFusionTaskResponse;
 import com.kuaishou.vod.openapi.model.response.vod.UpdateDanamkuAuditResultResponse;
 
 public class VodClient extends AbstractClient {
@@ -156,5 +159,10 @@ public class VodClient extends AbstractClient {
         return (ListMediaProcessJobResponse) listMediaProcessJobResponse().fromJson(resp);
     }
 
+    public SubmitOmniFusionTaskResponse submitOmniFusionTask(SubmitOmniFusionTaskRequest request)
+        throws KuaishouVodSdkException, IOException {
+        String resp = this.callByJson(request, "SubmitOmniFusionTask", "POST");
+        return (SubmitOmniFusionTaskResponse) submitOmniFusionTaskResponse().fromJson(resp);
+    }
 
 }
