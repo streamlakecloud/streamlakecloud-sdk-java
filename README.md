@@ -45,7 +45,7 @@ StreamLake SDK 是为 Java 编程语言提供的快手视频云（StreamLake）�
 <dependency>
     <groupId>com.streamlake</groupId>
     <artifactId>kuaishou-vod-open-sdk-java</artifactId>
-    <version>1.0.29</version>
+    <version>1.0.30</version>
 </dependency>
 ```
 
@@ -54,7 +54,7 @@ StreamLake SDK 是为 Java 编程语言提供的快手视频云（StreamLake）�
 在 `build.gradle` 中添加：
 
 ```gradle
-implementation 'com.streamlake:kuaishou-vod-open-sdk-java:1.0.29'
+implementation 'com.streamlake:kuaishou-vod-open-sdk-java:1.0.30'
 ```
 
 ## 快速开始
