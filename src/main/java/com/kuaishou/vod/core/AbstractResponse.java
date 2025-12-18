@@ -24,6 +24,7 @@ import com.kuaishou.vod.openapi.model.response.vod.ListDanmakuPreAuditResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ListMediaProcessJobResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ProcessMediaResponse;
 import com.kuaishou.vod.openapi.model.response.vod.ProcessingFlowResponse;
+import com.kuaishou.vod.openapi.model.response.vod.QueryOmniFusionTaskResponse;
 import com.kuaishou.vod.openapi.model.response.vod.SubmitMediaProcessJobsResponse;
 import com.kuaishou.vod.openapi.model.response.vod.SubmitOmniFusionTaskResponse;
 import com.kuaishou.vod.openapi.model.response.vod.UpdateDanamkuAuditResultResponse;
@@ -141,6 +142,10 @@ public abstract class AbstractResponse<T extends AbstractResponse> {
 
     public static SubmitOmniFusionTaskResponse submitOmniFusionTaskResponse() {
         return new SubmitOmniFusionTaskResponse(SubmitOmniFusionTaskResponse.class);
+    }
+
+    public static QueryOmniFusionTaskResponse queryOmniFusionTaskResponse() {
+        return new QueryOmniFusionTaskResponse(QueryOmniFusionTaskResponse.class);
     }
 
     public T fromJson(String json) {
