@@ -70,13 +70,6 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
     private VideoGenerationRequest videoGenerationRequest;
     
     /**
-     * 视频转码配置（可选）
-     */
-    @SerializedName("video_transcode_config")
-    @Expose
-    private VideoTranscodeConfig videoTranscodeConfig;
-    
-    /**
      * 数字人配置（可选）
      */
     @SerializedName("vhuman_config")
@@ -141,14 +134,6 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
         this.videoGenerationRequest = videoGenerationRequest;
     }
 
-    public VideoTranscodeConfig getVideoTranscodeConfig() {
-        return videoTranscodeConfig;
-    }
-
-    public void setVideoTranscodeConfig(VideoTranscodeConfig videoTranscodeConfig) {
-        this.videoTranscodeConfig = videoTranscodeConfig;
-    }
-
     public VHumanConfig getVhumanConfig() {
         return vhumanConfig;
     }
@@ -181,9 +166,6 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
         }
         if (this.videoGenerationRequest != null) {
             map.put("video_generation_request", gson.toJson(this.videoGenerationRequest));
-        }
-        if (this.videoTranscodeConfig != null) {
-            map.put("video_transcode_config", gson.toJson(this.videoTranscodeConfig));
         }
         if (this.vhumanConfig != null) {
             map.put("vhuman_config", gson.toJson(this.vhumanConfig));
@@ -404,27 +386,6 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
 
         public void setCustomConstraint(String customConstraint) {
             this.customConstraint = customConstraint;
-        }
-    }
-
-    /**
-     * 视频转码配置
-     */
-    public static class VideoTranscodeConfig {
-        /**
-         * 是否需要视频转码（可选）
-         * 默认值：true
-         */
-        @SerializedName("is_need_video_transcode")
-        @Expose
-        private Boolean isNeedVideoTranscode;
-
-        public Boolean getIsNeedVideoTranscode() {
-            return isNeedVideoTranscode;
-        }
-
-        public void setIsNeedVideoTranscode(Boolean isNeedVideoTranscode) {
-            this.isNeedVideoTranscode = isNeedVideoTranscode;
         }
     }
 

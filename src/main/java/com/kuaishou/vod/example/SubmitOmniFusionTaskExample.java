@@ -33,7 +33,7 @@ public class SubmitOmniFusionTaskExample {
 
     public static void main(String[] args) {
         // 选择要运行的示例
-        // autoGenerateExample();   // AUTO_GENERATE 模式（自动生成文案）
+        autoGenerateExample();   // AUTO_GENERATE 模式（自动生成文案）
         userScriptExample();  // USER_SCRIPT 模式（用户脚本）
     }
 

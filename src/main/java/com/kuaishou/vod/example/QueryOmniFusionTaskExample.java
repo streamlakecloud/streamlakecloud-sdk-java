@@ -8,6 +8,8 @@ import com.kuaishou.vod.core.exception.KuaishouVodSdkException;
 import com.kuaishou.vod.openapi.client.VodClient;
 import com.kuaishou.vod.openapi.model.request.vod.QueryOmniFusionTaskRequest;
 import com.kuaishou.vod.openapi.model.response.vod.QueryOmniFusionTaskResponse;
+import com.kuaishou.vod.openapi.model.response.vod.QueryOmniFusionTaskResponse.ResponseData;
+import com.kuaishou.vod.openapi.model.response.vod.QueryOmniFusionTaskResponse.WorkflowStatus;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -80,9 +82,31 @@ public class QueryOmniFusionTaskExample {
             }
             
             // 打印响应数据
-            if (response.getResponseData() != null) {
+            ResponseData data = response.getResponseData();
+            if (data != null) {
                 System.out.println("响应数据:");
-                System.out.println(response.getResponseData());
+                System.out.println("  任务ID: " + data.getTaskId());
+                System.out.println("  工作流状态: " + data.getWorkflowStatus());
+                System.out.println("  进度: " + data.getProgress() + "%");
+                
+                // 检查任务状态
+                if (WorkflowStatus.COMPLETED.equals(data.getWorkflowStatus())) {
+                    System.out.println("  任务已完成！");
+                    
+                    // 获取结果数据
+                    if (data.getResultData() != null && data.getResultData().getVideo() != null) {
+                        String videoUrl = data.getResultData().getVideo().getUrl();
+                        System.out.println("  视频URL: " + videoUrl);
+                    }
+                } else if (WorkflowStatus.RUNNING.equals(data.getWorkflowStatus())) {
+                    System.out.println("  任务正在运行中，请稍后再查询...");
+                } else if (WorkflowStatus.NOT_STARTED.equals(data.getWorkflowStatus())) {
+                    System.out.println("  任务尚未开始...");
+                } else if (WorkflowStatus.ERROR.equals(data.getWorkflowStatus())) {
+                    System.out.println("  任务执行出错！");
+                } else if (WorkflowStatus.FAILED.equals(data.getWorkflowStatus())) {
+                    System.out.println("  任务处理失败！");
+                }
                 System.out.println("========================================");
             }
             
@@ -95,4 +119,3 @@ public class QueryOmniFusionTaskExample {
         }
     }
 }
-
