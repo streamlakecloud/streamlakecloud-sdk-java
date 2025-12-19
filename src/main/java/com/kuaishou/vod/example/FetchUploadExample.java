@@ -90,7 +90,9 @@ public class FetchUploadExample {
             // 打印响应数据
             if (response.getResponseData() != null) {
                 System.out.println("响应数据:");
-                System.out.println(response.getResponseData());
+                if (response.getResponseData().getMediaIds() != null) {
+                    System.out.println("  MediaIds: " + response.getResponseData().getMediaIds());
+                }
                 System.out.println("========================================");
             }
             
