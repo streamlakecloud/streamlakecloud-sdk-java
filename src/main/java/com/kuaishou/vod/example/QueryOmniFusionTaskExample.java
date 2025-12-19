@@ -52,7 +52,7 @@ public class QueryOmniFusionTaskExample {
         QueryOmniFusionTaskRequest request = new QueryOmniFusionTaskRequest();
         
         // 设置任务 ID（从 SubmitOmniFusionTask 返回的 task_id）
-        request.setTaskId("bb907d4198882814890cb5347b6fc9f4");
+        request.setTaskId("cba9159dbf67edf1b3845c67d118eedb");
         
         // 6. 调用 API
         try {
