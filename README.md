@@ -45,7 +45,7 @@ StreamLake SDK 是为 Java 编程语言提供的快手视频云（StreamLake）�
 <dependency>
     <groupId>com.streamlake</groupId>
     <artifactId>kuaishou-vod-open-sdk-java</artifactId>
-    <version>1.0.30</version>
+    <version>1.0.31</version>
 </dependency>
 ```
 
@@ -54,7 +54,7 @@ StreamLake SDK 是为 Java 编程语言提供的快手视频云（StreamLake）�
 在 `build.gradle` 中添加：
 
 ```gradle
-implementation 'com.streamlake:kuaishou-vod-open-sdk-java:1.0.30'
+implementation 'com.streamlake:kuaishou-vod-open-sdk-java:1.0.31'
 ```
 
 ## 快速开始
@@ -526,7 +526,7 @@ try {
 
 ## 更新日志
 
-### v1.0.30
+### v1.0.31
 - 新增 `QueryOmniFusionTask` API 支持，可查询多模态融合任务状态
 - `SubmitOmniFusionTask` 新增 `generation_type` 字段，支持 `AUTO_GENERATE` 和 `USER_SCRIPT` 两种模式
 - `SubmitOmniFusionTask` 新增 `source_script` 字段，支持用户脚本模式
@@ -537,7 +537,7 @@ try {
 - 新增 `QueryOmniFusionTaskExample` 示例
 - 添加常量类：`GenerationType`、`MediaType`、`OutputFormat`、`Quality`、`WorkflowStatus`
 
-### v1.0.29
+### v1.0.30
 - 添加 SubmitOmniFusionTask API 支持
 - 优化 HTTP 客户端配置
 - 改进错误处理机制
