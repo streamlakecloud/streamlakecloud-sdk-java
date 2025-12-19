@@ -3,7 +3,7 @@
 StreamLake SDK 是为 Java 编程语言提供的快手视频云（StreamLake）官方 SDK。
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Maven Central](https://img.shields.io/badge/maven--central-1.0.29-brightgreen.svg)](https://search.maven.org/artifact/com.streamlake/kuaishou-vod-open-sdk-java)
+[![Maven Central](https://img.shields.io/badge/maven--central-1.0.30-brightgreen.svg)](https://search.maven.org/artifact/com.streamlake/kuaishou-vod-open-sdk-java)
 
 ## 目录
 
@@ -144,7 +144,8 @@ try {
 - `enhanceMedia` - 媒体增强
 - `submitProcessingFlow` - 提交处理流程
 - `submitMediaProcessJobs` - 提交媒体处理任务
-- `submitOmniFusionTask` - 提交全景融合任务
+- `submitOmniFusionTask` - 提交多模态融合任务
+- `queryOmniFusionTask` - 查询多模态融合任务状态
 - `listDanmakuPreAudit` - 弹幕预审列表
 - `updateDanamkuAuditResult` - 更新弹幕审核结果
 - `describeMediaProcessJob` - 查询媒体处理任务
@@ -214,7 +215,7 @@ public class FetchUploadExample {
 }
 ```
 
-### 示例 2: 提交全景融合任务
+### 示例 2: 提交多模态融合任务（AUTO_GENERATE 模式）
 
 ```java
 import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest;
@@ -231,10 +232,10 @@ public class OmniFusionExample {
         request.setCallbackUrl("https://your-callback-url.com/callback");
         request.setTemplateId("template1");
         
-        // 设置媒体源
+        // 设置媒体源（AUTO_GENERATE 模式不允许传入音频）
         List<MediaSource> mediaSourceList = new ArrayList<>();
         MediaSource media = new MediaSource();
-        media.setMediaType("video");
+        media.setMediaType(MediaType.VIDEO);
         media.setMediaId("your-media-id");
         mediaSourceList.add(media);
         request.setMediaSource(mediaSourceList);
@@ -242,12 +243,14 @@ public class OmniFusionExample {
         // 设置输出配置
         OutputConfig outputConfig = new OutputConfig();
         outputConfig.setOutputFormat("mp4");
-        outputConfig.setQuality("high");
+        outputConfig.setQuality(Quality.HIGH);
         request.setOutputConfig(outputConfig);
         
-        // 设置视频生成请求
+        // 设置视频生成请求（AUTO_GENERATE 模式）
         VideoGenerationRequest videoGenRequest = new VideoGenerationRequest();
+        videoGenRequest.setGenerationType(GenerationType.AUTO_GENERATE);
         videoGenRequest.setProductTitle("产品标题");
+        videoGenRequest.setProductDescription("产品描述");
         videoGenRequest.setExpectedDuration(30);
         request.setVideoGenerationRequest(videoGenRequest);
         
@@ -258,7 +261,81 @@ public class OmniFusionExample {
 }
 ```
 
-### 示例 3: CDN URL 签名
+### 示例 3: 提交多模态融合任务（USER_SCRIPT 模式）
+
+```java
+// USER_SCRIPT 模式：使用用户提供的脚本，必须传入音频素材
+SubmitOmniFusionTaskRequest request = new SubmitOmniFusionTaskRequest();
+request.setBizKey("CYBERCUT_TEST_TOB");
+request.setCallbackUrl("https://your-callback-url.com/callback");
+
+// 设置媒体源（USER_SCRIPT 模式必须传入音频）
+List<MediaSource> mediaSourceList = new ArrayList<>();
+
+MediaSource video = new MediaSource();
+video.setMediaType(MediaType.VIDEO);
+video.setMediaId("video-media-id");
+mediaSourceList.add(video);
+
+MediaSource audio = new MediaSource();
+audio.setMediaType(MediaType.AUDIO);  // 音频素材（最多1个）
+audio.setMediaId("audio-media-id");
+mediaSourceList.add(audio);
+
+request.setMediaSource(mediaSourceList);
+
+// 设置视频生成请求（USER_SCRIPT 模式）
+VideoGenerationRequest videoGenRequest = new VideoGenerationRequest();
+videoGenRequest.setGenerationType(GenerationType.USER_SCRIPT);
+videoGenRequest.setSourceScript("用户脚本内容，与音频内容一致...");
+request.setVideoGenerationRequest(videoGenRequest);
+
+SubmitOmniFusionTaskResponse response = vodClient.submitOmniFusionTask(request);
+```
+
+### 示例 4: 查询多模态融合任务状态
+
+```java
+import com.kuaishou.vod.openapi.model.request.vod.QueryOmniFusionTaskRequest;
+import com.kuaishou.vod.openapi.model.response.vod.QueryOmniFusionTaskResponse;
+import com.kuaishou.vod.openapi.model.response.vod.QueryOmniFusionTaskResponse.*;
+
+// 创建查询请求
+QueryOmniFusionTaskRequest request = new QueryOmniFusionTaskRequest();
+request.setTaskId("your-task-id");
+
+// 调用 API
+QueryOmniFusionTaskResponse response = vodClient.queryOmniFusionTask(request);
+ResponseData data = response.getResponseData();
+
+// 检查任务状态
+if (WorkflowStatus.COMPLETED.equals(data.getWorkflowStatus())) {
+    // 任务完成，获取视频URL
+    String videoUrl = data.getResultData().getVideo().getUrl();
+    System.out.println("视频URL: " + videoUrl);
+} else if (WorkflowStatus.RUNNING.equals(data.getWorkflowStatus())) {
+    System.out.println("任务进度: " + data.getProgress() + "%");
+}
+```
+
+### 示例 5: 查询媒体信息
+
+```java
+import com.kuaishou.vod.openapi.model.request.vod.DescribeMediaInfoRequest;
+import com.kuaishou.vod.openapi.model.response.vod.DescribeMediaInfoResponse;
+
+// 创建查询请求
+DescribeMediaInfoRequest request = new DescribeMediaInfoRequest();
+request.setMediaId("your-media-id");
+// 可选：设置过滤器
+// request.setFilters("basicInfo,sourceInfo,transCodeInfo");
+
+// 调用 API
+DescribeMediaInfoResponse response = vodClient.describeMediaInfo(request);
+System.out.println("媒体信息: " + response.toJson());
+```
+
+### 示例 6: CDN URL 签名
 
 ```java
 import com.kuaishou.vod.core.cdn.CdnClient;
@@ -323,7 +400,9 @@ src/main/java/com/kuaishou/vod/
 │       └── callback/       # 回调事件模型
 └── example/                # 使用示例
     ├── FetchUploadExample.java
-    └── SubmitOmniFusionTaskExample.java
+    ├── DescribeMediaInfoExample.java
+    ├── SubmitOmniFusionTaskExample.java
+    └── QueryOmniFusionTaskExample.java
 ```
 
 ## 环境配置
@@ -446,6 +525,17 @@ try {
 - GitHub：[https://github.com/streamlakecloud/streamlakecloud-sdk-java](https://github.com/streamlakecloud/streamlakecloud-sdk-java)
 
 ## 更新日志
+
+### v1.0.30
+- 新增 `QueryOmniFusionTask` API 支持，可查询多模态融合任务状态
+- `SubmitOmniFusionTask` 新增 `generation_type` 字段，支持 `AUTO_GENERATE` 和 `USER_SCRIPT` 两种模式
+- `SubmitOmniFusionTask` 新增 `source_script` 字段，支持用户脚本模式
+- `SubmitOmniFusionTask` 新增 `vhuman_config` 数字人配置
+- `SubmitOmniFusionTask` 媒体类型新增 `audio` 支持
+- `FetchUploadResponse` 新增 `MediaIds` 字段
+- 新增 `DescribeMediaInfoExample` 示例
+- 新增 `QueryOmniFusionTaskExample` 示例
+- 添加常量类：`GenerationType`、`MediaType`、`OutputFormat`、`Quality`、`WorkflowStatus`
 
 ### v1.0.29
 - 添加 SubmitOmniFusionTask API 支持
