@@ -9,11 +9,14 @@ import com.kuaishou.vod.core.HttpProfile;
 import com.kuaishou.vod.core.exception.KuaishouVodSdkException;
 import com.kuaishou.vod.openapi.client.VodClient;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest;
+import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.AspectRatio;
+import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.ExtraParams;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.GenerationType;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.MediaSource;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.MediaType;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.OutputConfig;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.Quality;
+import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.Resolution;
 import com.kuaishou.vod.openapi.model.request.vod.SubmitOmniFusionTaskRequest.VideoGenerationRequest;
 import com.kuaishou.vod.openapi.model.response.vod.SubmitOmniFusionTaskResponse;
 
@@ -33,8 +36,8 @@ public class SubmitOmniFusionTaskExample {
 
     public static void main(String[] args) {
         // 选择要运行的示例
-        // autoGenerateExample();   // AUTO_GENERATE 模式（自动生成文案）
-        userScriptExample();  // USER_SCRIPT 模式（用户脚本）
+        autoGenerateExample();   // AUTO_GENERATE 模式（自动生成文案）
+        // userScriptExample();  // USER_SCRIPT 模式（用户脚本）
     }
 
     /**
@@ -82,7 +85,8 @@ public class SubmitOmniFusionTaskExample {
         outputConfig.setFilenamePrefix("my_video_");
         outputConfig.setOutputFormat("mp4");
         outputConfig.setQuality(Quality.HIGH);
-        outputConfig.setExtraParams("{\"resolution\":\"1080p\"}");
+        // 使用 ExtraParams 对象设置额外参数（推荐方式，类型安全）
+        outputConfig.setExtraParams(new ExtraParams(Resolution.RES_1080P, AspectRatio.RATIO_1_1));
         request.setOutputConfig(outputConfig);
         
         // 设置视频生成请求（AUTO_GENERATE 模式）
@@ -150,6 +154,10 @@ public class SubmitOmniFusionTaskExample {
         outputConfig.setFilenamePrefix("user_script_video_");
         outputConfig.setOutputFormat("mp4");
         outputConfig.setQuality(Quality.HIGH);
+        // 使用链式调用设置额外参数（推荐方式）
+        outputConfig.setExtraParams(new ExtraParams()
+                .withResolution(Resolution.RES_720P)
+                .withAspectRatio(AspectRatio.RATIO_9_16));  // 竖屏视频
         request.setOutputConfig(outputConfig);
         
         // 设置视频生成请求（USER_SCRIPT 模式）

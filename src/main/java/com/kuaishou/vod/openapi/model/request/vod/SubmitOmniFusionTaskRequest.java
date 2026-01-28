@@ -246,6 +246,11 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
         
         /**
          * 额外的输出参数，JSON字符串（可选）
+         * <p>
+         * 支持的参数：
+         * - resolution: 输出分辨率（如 720, 1080）
+         * - aspect_ratio: 宽高比（如 "16:9", "9:16", "1:1"）
+         * </p>
          */
         @SerializedName("extra_params")
         @Expose
@@ -279,8 +284,156 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
             return extraParams;
         }
 
+        /**
+         * 设置额外参数（JSON字符串形式）
+         * <p>
+         * 兼容旧版本，直接传入JSON字符串
+         * </p>
+         * 
+         * @param extraParams JSON字符串，如 "{\"resolution\":720,\"aspect_ratio\":\"1:1\"}"
+         */
         public void setExtraParams(String extraParams) {
             this.extraParams = extraParams;
+        }
+        
+        /**
+         * 设置额外参数（对象形式，推荐）
+         * <p>
+         * 使用 ExtraParams 对象设置参数，SDK会自动序列化为JSON字符串
+         * </p>
+         * 
+         * @param extraParams ExtraParams对象
+         */
+        public void setExtraParams(ExtraParams extraParams) {
+            if (extraParams != null) {
+                this.extraParams = new Gson().toJson(extraParams);
+            } else {
+                this.extraParams = null;
+            }
+        }
+    }
+    
+    /**
+     * 额外输出参数
+     * <p>
+     * 用于配置输出视频的分辨率和宽高比等参数
+     * </p>
+     */
+    public static class ExtraParams {
+        /**
+         * 输出分辨率（可选）
+         * <p>
+         * 推荐使用 Resolution 枚举设置
+         * </p>
+         */
+        @SerializedName("resolution")
+        @Expose
+        private Integer resolution;
+        
+        /**
+         * 宽高比（可选）
+         * <p>
+         * 推荐使用 AspectRatio 枚举设置
+         * </p>
+         */
+        @SerializedName("aspect_ratio")
+        @Expose
+        private String aspectRatio;
+        
+        /**
+         * 默认构造函数
+         */
+        public ExtraParams() {
+        }
+        
+        /**
+         * 带参数的构造函数（使用枚举，推荐）
+         * 
+         * @param resolution 分辨率枚举
+         * @param aspectRatio 宽高比枚举
+         */
+        public ExtraParams(Resolution resolution, AspectRatio aspectRatio) {
+            this.resolution = resolution != null ? resolution.getValue() : null;
+            this.aspectRatio = aspectRatio != null ? aspectRatio.getValue() : null;
+        }
+        
+        /**
+         * 带参数的构造函数（兼容旧版，直接传值）
+         * 
+         * @param resolution 输出分辨率数值
+         * @param aspectRatio 宽高比字符串
+         */
+        public ExtraParams(Integer resolution, String aspectRatio) {
+            this.resolution = resolution;
+            this.aspectRatio = aspectRatio;
+        }
+
+        public Integer getResolution() {
+            return resolution;
+        }
+
+        /**
+         * 设置分辨率（直接传数值，兼容旧版）
+         */
+        public void setResolution(Integer resolution) {
+            this.resolution = resolution;
+        }
+        
+        /**
+         * 设置分辨率（使用枚举，推荐）
+         */
+        public void setResolution(Resolution resolution) {
+            this.resolution = resolution != null ? resolution.getValue() : null;
+        }
+
+        public String getAspectRatio() {
+            return aspectRatio;
+        }
+
+        /**
+         * 设置宽高比（直接传字符串，兼容旧版）
+         */
+        public void setAspectRatio(String aspectRatio) {
+            this.aspectRatio = aspectRatio;
+        }
+        
+        /**
+         * 设置宽高比（使用枚举，推荐）
+         */
+        public void setAspectRatio(AspectRatio aspectRatio) {
+            this.aspectRatio = aspectRatio != null ? aspectRatio.getValue() : null;
+        }
+        
+        /**
+         * Builder模式（直接传数值，兼容旧版）
+         */
+        public ExtraParams withResolution(Integer resolution) {
+            this.resolution = resolution;
+            return this;
+        }
+        
+        /**
+         * Builder模式（使用枚举，推荐）
+         */
+        public ExtraParams withResolution(Resolution resolution) {
+            this.resolution = resolution != null ? resolution.getValue() : null;
+            return this;
+        }
+        
+        /**
+         * Builder模式（直接传字符串，兼容旧版）
+         */
+        public ExtraParams withAspectRatio(String aspectRatio) {
+            this.aspectRatio = aspectRatio;
+            return this;
+        }
+        
+        /**
+         * Builder模式（使用枚举，推荐）
+         */
+        public ExtraParams withAspectRatio(AspectRatio aspectRatio) {
+            this.aspectRatio = aspectRatio != null ? aspectRatio.getValue() : null;
+            return this;
         }
     }
 
@@ -466,5 +619,63 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
         public static final String HIGH = "high";
         
         private Quality() {}
+    }
+    
+    /**
+     * 宽高比枚举
+     */
+    public enum AspectRatio {
+        /** 横屏 16:9 */
+        RATIO_16_9("16:9"),
+        /** 竖屏 9:16 */
+        RATIO_9_16("9:16"),
+        /** 方形 1:1 */
+        RATIO_1_1("1:1");
+        
+        private final String value;
+        
+        AspectRatio(String value) {
+            this.value = value;
+        }
+        
+        public String getValue() {
+            return value;
+        }
+        
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
+    
+    /**
+     * 分辨率枚举
+     */
+    public enum Resolution {
+        /** 480p */
+        RES_480P(480),
+        /** 720p HD */
+        RES_720P(720),
+        /** 1080p Full HD */
+        RES_1080P(1080),
+        /** 1440p 2K */
+        RES_1440P(1440),
+        /** 2160p 4K / UHD */
+        RES_4K(2160);
+        
+        private final int value;
+        
+        Resolution(int value) {
+            this.value = value;
+        }
+        
+        public int getValue() {
+            return value;
+        }
+        
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
     }
 }

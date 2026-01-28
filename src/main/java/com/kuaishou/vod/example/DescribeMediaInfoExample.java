@@ -90,7 +90,7 @@ public class DescribeMediaInfoExample {
         if (vodClient == null) return;
         
         // 直接使用已知的 MediaId 查询
-        String mediaId = "f2d98580a65ca745";
+        String mediaId = "bc318f3381968be2111";
         
         System.out.println("========================================");
         System.out.println("查询 MediaId: " + mediaId);
