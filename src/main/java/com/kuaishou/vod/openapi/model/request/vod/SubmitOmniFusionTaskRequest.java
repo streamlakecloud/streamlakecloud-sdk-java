@@ -493,6 +493,13 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
         @Expose
         private String customConstraint;
 
+        /**
+         * 是否开启字幕（可选，默认 true）
+         */
+        @SerializedName("enable_subtitle")
+        @Expose
+        private Boolean enableSubtitle;
+
         public String getGenerationType() {
             return generationType;
         }
@@ -539,6 +546,14 @@ public class SubmitOmniFusionTaskRequest extends AbstractRequest {
 
         public void setCustomConstraint(String customConstraint) {
             this.customConstraint = customConstraint;
+        }
+
+        public Boolean getEnableSubtitle() {
+            return enableSubtitle;
+        }
+
+        public void setEnableSubtitle(Boolean enableSubtitle) {
+            this.enableSubtitle = enableSubtitle;
         }
     }
 
